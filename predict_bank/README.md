@@ -20,8 +20,24 @@ Octubre 2025
 Este proyecto implementa un modelo de Machine Learning en Python para predecir el resultado de ciertas actividades bancarias.  
 El modelo y el flujo de predicción se ejecutan dentro de un contenedor Docker, lo cual garantiza un entorno limpio y reproducible.
 
-## Nota
+## Nota 1
 El profesor debe descargar el repositorio ubicado en la siguiente dirección
+```bash
+https://github.com/hombremono873/entrega_fase_2_con_descarga_kaggle.git
+
+```
+## Nota 2
+```bash
+El profesor debe unirse a la competencia de Kaggle fuente de este trabajo en los enlaces,
+
+https://www.kaggle.com/competitions/playground-series-s5e8/overview
+https://www.kaggle.com/competitions/playground-series-s5e8/data
+
+```
+El profesor debe obtener un token de acceso "kaggle.json" para acceder a los datasets 
+train.csv, test.csv.
+Debe ubicarse el archivo kaggle.json a la misma altura del archivo Dockerfile dentro de la carpeta,
+predick_bank.
 
 ---
 
@@ -54,8 +70,9 @@ El profesor debe descargar el repositorio ubicado en la siguiente dirección
 ## Ejecución del proyecto
 ## Construcción de la imagen Docker
 
+1. Inicie la aplicación docker desktop
 1. Arranque la aplicacion Doker Desktop
-2. Ubíquese en la raíz del proyecto. Por ejemplo:
+2. Ubíquese en la raíz del proyecto predict_bank
 
 ```bash
 
@@ -75,7 +92,11 @@ docker run -it --rm predict-bank-app
 docker run -it --name predict-run predict-bank-app
 ```
 
-```bash
+Despues de haber construido la imagen del docker, la aplicación queda en modo interactivo,
+Si es la primera vez que se ejecuta la aplicación ocurre lo siguiente.
+Al ejecutar el train.py se accede a la clave almacenada en json, se descarga automaticamente los datasets
+(train.csv, test.csv) almacenados en la carpeta temporal datos. Adicionalmente se genera el archivo modelo_entrenado.pkl y se ubica en la carpeta temporal datos.
+Al ejecutar test.csv se prueba el modelo y se genera los archivos test.txt y sumisscion.csv, que se ubicaran en la carpeta temporal datos del docker. Igualmente se imprime en consola algunos resultados de la prediccion.
 
 Entrenamiento del modelo
 ## Entrenamiento del modelo
@@ -88,8 +109,13 @@ root@4820ed2101ab:/app# python train.py
 #Ejecutar predict.py
 root@4820ed2101ab:/app# python predict.py
 
-```
+Para ver los archivos *.csv, resultados.txt, modelo entrenado.pkl, sample_submissions.csv
+ejecute lo siguiente
+```bash
+root@014f8c1ffe20:/app# cd datos
+root@014f8c1ffe20:/app/datos# ls
 ls -lh datos  
+
 ```bash
 #extraer predicciones.txt
 #El comando muestra el docker activo y el <ID_O_NOMBRE>
