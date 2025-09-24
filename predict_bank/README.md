@@ -36,18 +36,16 @@ El profesor debe descargar el repositorio ubicado en la siguiente dirección
 ## │ ├── train.csv # Dataset de entrenamiento (descargado desde Kaggle)
 ## │ ├── test.csv # Dataset de prueba (descargado desde Kaggle)
 ## │ ├── sample_submission.csv # Archivo de ejemplo de submission (Kaggle)
-## │ └── modelo_entrenado.pkl # Modelo entrenado guardado
-## │
-## ├── predict_bank/ # Código fuente del proyecto
-## │ ├── app/ # Scripts principales
-## │ │ ├── train.py # Script de entrenamiento del modelo
-## │ │ ├── predict.py # Script de predicción
-## │ │ └── init.py # (opcional) indica que es un paquete Python
-## │ │
-## │ ├── Dockerfile # Configuración del contenedor Docker
+## │ └── modelo_entrenado.pkl  # Modelo entrenado guardado
+## ├── predict_bank/      # Código fuente del proyecto
+## │ ├── app/             # Scripts principales
+## │ │ ├── train.py       # Script de entrenamiento del modelo
+## │ │ ├── predict.py     # Script de predicción
+## │ │ └── init.py        # (opcional) indica que es un paquete Python
+## │ ├── Dockerfile       # Configuración del contenedor Docker
 ## │ ├── requirements.txt # Dependencias del proyecto
-## │ └── README.md #  Documentación del proyecto
-## | └──kaggle.json # Credenciales de la API de Kaggle
+## │ └── README.md        #  Documentación del proyecto
+## | └──kaggle.json       # Credenciales de la API de Kaggle
 ## └──
 
 
