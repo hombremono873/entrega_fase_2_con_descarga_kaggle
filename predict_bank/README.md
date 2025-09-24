@@ -101,10 +101,13 @@ Al ejecutar test.csv se prueba el modelo y se genera los archivos test.txt y sum
 Entrenamiento del modelo
 ## Entrenamiento del modelo
 root@4820ed2101ab:/app# python train.py
-**Nota_1:** Se accede a los datasets (train.csv y test.csv), se realiza el entrenamiento, el modelo entrenado
+
+**Nota_1:**
+  Se accede a los datasets (train.csv y test.csv), se realiza el entrenamiento, el modelo entrenado
   se almacena en la carpeta datos;  temporal en el docker
  
-**Nota_2** El siguiente comando ejecuta las predicciones, al finalizar se descarga en la carpata temporal datos el archivo predicciones.txt
+**Nota_2**
+ El siguiente comando ejecuta las predicciones, al finalizar se descarga en la carpata temporal datos el archivo predicciones.txt
 
 #Ejecutar predict.py
 root@4820ed2101ab:/app# python predict.py
