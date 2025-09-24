@@ -20,6 +20,9 @@ Octubre 2025
 Este proyecto implementa un modelo de Machine Learning en Python para predecir el resultado de ciertas actividades bancarias.  
 El modelo y el flujo de predicción se ejecutan dentro de un contenedor Docker, lo cual garantiza un entorno limpio y reproducible.
 
+## Nota
+El profesor debe descargar el repositorio ubicado en la siguiente dirección
+
 ---
 
 ## Requisitos previos
@@ -43,16 +46,18 @@ taller_IA_fase2/ # Carpeta principal del proyecto
 │ │
 │ ├── Dockerfile # Configuración del contenedor Docker
 │ ├── requirements.txt # Dependencias del proyecto
-│ └── README.md # Documentación del proyecto
-│
-├── kaggle.json # Credenciales de la API de Kaggle
-└── 
+│ └── README.md #  Documentación del proyecto
+| └──kaggle.json # Credenciales de la API de Kaggle
+└──
+
+
 
 ---
 ## Ejecución del proyecto
 ## Construcción de la imagen Docker
 
-Ubíquese en la raíz del proyecto. Por ejemplo:
+1. Arranque la aplicacion Doker Desktop
+2. Ubíquese en la raíz del proyecto. Por ejemplo:
 
 ```bash
 
@@ -60,16 +65,14 @@ Ubíquese en la raíz del proyecto. Por ejemplo:
 
 ## Construcción de la imagen Docker
 
-Ubíquese en la carpeta `predict_bank`:
-
 ```bash
-# Ubíquese en la raíz del proyecto. Por ejemplo:
+# Ubíquese en la raíz del proyecto a la altura de Dokerfile. Por ejemplo (Mi caso):
 cd C:\Users\OMAR TORRES\Desktop\taller_IA_fase2\predict_bank
 
-# Construir la imagen Docker
+## Construir la imagen Docker
 docker build -t predict-bank-app .
 
-#ejecutar el docker en modo interactivo
+## Ejecutar el docker en modo interactivo
 docker run -it --rm predict-bank-app
 docker run -it --name predict-run predict-bank-app
 ```
@@ -92,9 +95,11 @@ ls -lh datos
 ```bash
 #extraer predicciones.txt
 #El comando muestra el docker activo y el <ID_O_NOMBRE>
+
 Este es mi caso:
 CONTAINER ID   IMAGE              COMMAND   CREATED          STATUS          PORTS     NAMES
 4820ed2101ab   predict-bank-app   "bash"    16 minutes ago   Up 16 minutes             epic_zhukovsky
+
 docker ps
 <ID_O_NOMBRE> = 4820ed2101ab
 docker cp <ID_O_NOMBRE>:/app/datos/predicciones.txt "%USERPROFILE%\Downloads\predicciones.txt"
@@ -105,15 +110,15 @@ docker cp <ID_O_NOMBRE>:/app/datos/predicciones.txt "%USERPROFILE%\Downloads\pre
 ## Nota
 
 ```bash
-#Gerstion cierre de imagenes y docker
+# Gestión cierre de imagenes y docker
 
-#Ver contenedores activos
+# Ver contenedores activos
  C:\cualquier ruta> doker ps
- #Ver contenedores activos y detenidos
+ # Ver contenedores activos y detenidos
  C:\cualquier ruta> doker ps -a
- #Elimna contenedores detenidos
+ # Elimna contenedores detenidos
  C:\cualquier ruta> docker container prune
- #Elimina todas las imagenes 
+ # Elimina todas las imagenes 
   C:\cualquier ruta>docker image prune -a
 
 ```
