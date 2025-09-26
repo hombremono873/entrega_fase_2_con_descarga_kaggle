@@ -11,7 +11,7 @@ Facultad de Ingeniería
 Universidad de Antioquia
 
 ## Fecha de entrega
-Octubre 2025
+Noviembre 2 2025
 
 ---
 
@@ -68,15 +68,10 @@ predick_bank.
 
 ---
 ## Ejecución del proyecto
-## Construcción de la imagen Docker
-
+Construcción de la imagen Docker
 1. Inicie la aplicación docker desktop
-1. Arranque la aplicacion Doker Desktop
 2. Ubíquese en la raíz del proyecto predict_bank
 
-```bash
-
----
 
 ## Construcción de la imagen Docker
 
@@ -85,11 +80,12 @@ predick_bank.
 cd C:\Users\OMAR TORRES\Desktop\taller_IA_fase2\predict_bank
 
 ## Construir la imagen Docker
-docker build -t predict-bank-app .
-
-## Ejecutar el docker en modo interactivo
-docker run -it --rm predict-bank-app
-docker run -it --name predict-run predict-bank-app
+docker build -t predict_bank_app .
+```
+# Ejecutar el docker en modo interactivo
+```bash
+docker run -it --rm predict_bank_app
+# docker run -it --name predict_run predict_bank_app
 ```
 
 Despues de haber construido la imagen del docker, la aplicación queda en modo interactivo,
@@ -99,62 +95,73 @@ Al ejecutar el train.py se accede a la clave almacenada en json, se descarga aut
 Al ejecutar test.csv se prueba el modelo y se genera los archivos test.txt y sumisscion.csv, que se ubicaran en la carpeta temporal datos del docker. Igualmente se imprime en consola algunos resultados de la prediccion.
 
 Entrenamiento del modelo
-## Entrenamiento del modelo
+# Entrenamiento del modelo
+## Ejecutar predict.py
+```bash
 root@4820ed2101ab:/app# python train.py
-
+```
 **Nota_1:**
   Se accede a los datasets (train.csv y test.csv), se realiza el entrenamiento, el modelo entrenado
   se almacena en la carpeta datos;  temporal en el docker
  
-**Nota_2**
+## Ejecutando predicciones con el archivo test.csv
  El siguiente comando ejecuta las predicciones, al finalizar se descarga en la carpata temporal datos el archivo predicciones.txt
 
-#Ejecutar predict.py
+# Ejecutar predict.py
+```bash
 root@4820ed2101ab:/app# python predict.py
-
-Para ver los archivos *.csv, resultados.txt, modelo entrenado.pkl, sample_submissions.csv
-ejecute lo siguiente
-```bash
-root@014f8c1ffe20:/app# cd datos
-root@014f8c1ffe20:/app/datos# ls
-ls -lh datos  
-
-```bash
-#extraer predicciones.txt
-#El comando muestra el docker activo y el <ID_O_NOMBRE>
-
-Este es mi caso:
-CONTAINER ID   IMAGE              COMMAND   CREATED          STATUS          PORTS     NAMES
-4820ed2101ab   predict-bank-app   "bash"    16 minutes ago   Up 16 minutes             epic_zhukovsky
-
-docker ps
-<ID_O_NOMBRE> = 4820ed2101ab
-docker cp <ID_O_NOMBRE>:/app/datos/predicciones.txt "%USERPROFILE%\Downloads\predicciones.txt"
-**En mi caso el archivo de predicciones queda en descargas**
-
 ```
 
-## Nota
+**Nota**
 
 ```bash
 # Gestión cierre de imagenes y docker
 
 # Ver contenedores activos
- C:\cualquier ruta> doker ps
+ C:\cualquier ruta>docker ps
  # Ver contenedores activos y detenidos
- C:\cualquier ruta> doker ps -a
+ C:\cualquier ruta>docker ps -a
  # Elimna contenedores detenidos
- C:\cualquier ruta> docker container prune
+ C:\cualquier ruta>docker container prune
  # Elimina todas las imagenes 
   C:\cualquier ruta>docker image prune -a
 
 ```
+
+# Gestion de archivos generados
+
+Los archivos modelo_entrenado.pkl, predicciones.txt, predict.csv quedan en la carpeta temporal datos
+pueden ser leidos asi: 
+
+```bash
+root@6cd540dc7299:/app/datos# head -n 10 /app/datos/predict.csv
+root@6cd540dc7299:/app/datos# head -n 10 /app/datos/predicciones.txt
+
+```
+# Descarga a mi pc los archivos
+Teniendo corriendo el docker abra otra consola y ejecute el comando docker ps para obtener el id del docker
+**Nota** las rutas y ID dependen de tu equipo, solo muestro un ejemplo de como lo hice en el mío"
+
+**Formato**
+docker cp <ID_CONTENEDOR>:/app/datos/predict.csv "C:\Users\OMAR\Downloads\predict.csv"
+```bash
+docker ps
+Obtuve por ID "ad38969d1f09"
+docker cp ad38969d1f09:/app/datos/predict.csv "C:\Users\OMAR TORRES\Downloads\predict.csv"
+docker cp ad38969d1f09:/app/datos/predicciones.txt "C:\Users\OMAR TORRES\Downloads\predicciones.txt"
+docker cp ad38969d1f09:/app/datos/modelo_entrenado.pkl "C:\Users\OMAR TORRES\Downloads\modelo_entrenado.pkl"
+```
+
 ## En caso de consulta contactar a:
 Omar Alberto Torres
 tel: 3043440112
 Correo: omar.torresm@udea.edu.co
 
 Nota: En caso de requerir orientación adicional sobre la ejecución o los detalles técnicos del proyecto, puede contactarme al correo institucional o revisar los comentarios en el código fuente.
+
+
+
+
 
 
 

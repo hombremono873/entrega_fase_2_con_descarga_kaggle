@@ -11,7 +11,7 @@ import os
 # ------------------------------------------------------------------------------  
 # Carpeta de datos externa (montada en Docker en /app/datos)
 # ------------------------------------------------------------------------------  
-DATA_DIR = "datos"
+#DATA_DIR = "datos"
 
 #------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ def ensure_kaggle_data(competition="playground-series-s5e8", data_dir="./datos")
 
 
 # ------------------------------------------------------------------------------  
-# Funciones de preprocesamiento (idénticas a predict.py)
+# Funciones de preprocesamiento
 # ------------------------------------------------------------------------------  
 def clean_df(df: pd.DataFrame, cols_drop: list, flag: bool):
     df_clean = df.drop(columns=cols_drop)
@@ -59,7 +59,7 @@ def encode_categoricals(X):
     return X_encoded
 
 # ------------------------------------------------------------------------------  
-# Definición del modelo Random Forest (basado en tu Colab)
+# Definición del modelo Random Forest
 # ------------------------------------------------------------------------------  
 def modelo_random_forest(X_train, y_train):
     modelo = RandomForestClassifier(
@@ -80,28 +80,25 @@ def modelo_random_forest(X_train, y_train):
 # ------------------------------------------------------------------------------  
 # Flujo principal de entrenamiento
 # ------------------------------------------------------------------------------  
-def train_model222():
-    # Cargar dataset de entrenamiento
-    path = os.path.join(DATA_DIR, "train.csv")
-    df_train = pd.read_csv(path)
 
-    # Columnas a eliminar (coherente con predict.py)
-    columnas_a_eliminar = ["id", "day", "month", "duration"]
+DATA_DIR = "./datos"
 
-    # Preprocesamiento
-    X, y = clean_df(df_train, columnas_a_eliminar, flag=True)
+def train_model():
+    train_path, _, _ = ensure_kaggle_data(data_dir=DATA_DIR)  # Asegurar que los datos estén disponibles
+    df_train = pd.read_csv(train_path)   # Cargar dataset de entrenamiento       
+    columnas_a_eliminar = ["id", "day", "month", "duration"] # Columnas a eliminar (coherente con predict.py)
+
+    X, y = clean_df(df_train, columnas_a_eliminar, flag=True)  # Preprocesamiento
     X_encoded = encode_categoricals(X)
-
-    # División train/validación
+    
+   # División train/validación
     X_train, X_val, y_train, y_val = train_test_split(
         X_encoded, y, test_size=0.2, random_state=42
     )
 
-    # Entrenar modelo
-    modelo = modelo_random_forest(X_train, y_train)
+    modelo = modelo_random_forest(X_train, y_train)   # Entrenar modelo
 
-    # Evaluar
-    y_pred = modelo.predict(X_val)
+    y_pred = modelo.predict(X_val)                    # Evaluar
     y_proba = modelo.predict_proba(X_val)[:, 1]
 
     acc = accuracy_score(y_val, y_pred)
@@ -114,50 +111,6 @@ def train_model222():
     print(f" OOB Score (fuera de bolsa): {modelo.oob_score_:.4f}")
 
     # Guardar modelo entrenado
-    path_modelo = os.path.join(DATA_DIR, "modelo_entrenado.pkl")
-    joblib.dump(modelo, path_modelo)
-    print(f" Modelo guardado en {path_modelo}")
-
-
-
-DATA_DIR = "./datos"
-
-def train_model():
-    # 1. Asegurar que los datos estén disponibles
-    train_path, _, _ = ensure_kaggle_data(data_dir=DATA_DIR)
-
-    # 2. Cargar dataset de entrenamiento
-    df_train = pd.read_csv(train_path)
-
-    # 3. Columnas a eliminar (coherente con predict.py)
-    columnas_a_eliminar = ["id", "day", "month", "duration"]
-
-    # 4. Preprocesamiento
-    X, y = clean_df(df_train, columnas_a_eliminar, flag=True)
-    X_encoded = encode_categoricals(X)
-
-    # 5. División train/validación
-    X_train, X_val, y_train, y_val = train_test_split(
-        X_encoded, y, test_size=0.2, random_state=42
-    )
-
-    # 6. Entrenar modelo
-    modelo = modelo_random_forest(X_train, y_train)
-
-    # 7. Evaluar
-    y_pred = modelo.predict(X_val)
-    y_proba = modelo.predict_proba(X_val)[:, 1]
-
-    acc = accuracy_score(y_val, y_pred)
-    f1 = f1_score(y_val, y_pred)
-    auc = roc_auc_score(y_val, y_proba)
-
-    print(f" Accuracy: {acc:.4f}")
-    print(f" F1-score: {f1:.4f}")
-    print(f" AUC: {auc:.4f}")
-    print(f" OOB Score (fuera de bolsa): {modelo.oob_score_:.4f}")
-
-    # 8. Guardar modelo entrenado
     path_modelo = os.path.join(DATA_DIR, "modelo_entrenado.pkl")
     joblib.dump(modelo, path_modelo)
     print(f" Modelo guardado en {path_modelo}")
