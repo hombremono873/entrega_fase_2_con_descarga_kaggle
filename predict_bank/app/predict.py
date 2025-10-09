@@ -18,7 +18,8 @@ def load_model(path: str):
 
 # ------------------------------------------------------------------------------  
 def clean_df(df: pd.DataFrame, cols_drop: list, flag: bool):
-    df_clean = df.drop(columns=cols_drop)
+    #df_clean = df.drop(columns=cols_drop)
+    df_clean = df.drop(columns=cols_drop, errors="ignore")
     if flag:
         y = df_clean["y"]
         X = df_clean.drop(columns=["y"])
