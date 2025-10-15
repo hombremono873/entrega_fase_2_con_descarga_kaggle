@@ -83,7 +83,7 @@ def ejecutar_flujo_prediccion(
         pd.DataFrame({"id": ids, "y": y_pred}).to_csv(ruta_salida, index=False)
         print(f"Predicciones guardadas en archivo CSV: {ruta_salida}")
 
-    # ✅ Además, generar SIEMPRE el CSV oficial en /app/datos/predict.csv
+    #  Además, generar SIEMPRE el CSV oficial en /app/datos/predict.csv
     generar_submission(y_pred, ids, ruta_salida="/app/datos/predict.csv")
 
     # Mostrar primeras predicciones

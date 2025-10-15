@@ -23,6 +23,7 @@ def ensure_kaggle_data(competition="playground-series-s5e8", data_dir="./datos")
 
     if not (os.path.exists(train_path) and os.path.exists(test_path) and os.path.exists(sample_path)):
         print(" Archivos no encontrados, descargando desde Kaggle...")
+        print(" \n La operación puede tardar unos minutos por favor sea paciente...")
         subprocess.run(
             ["kaggle", "competitions", "download", "-c", competition, "-p", data_dir],
             check=True

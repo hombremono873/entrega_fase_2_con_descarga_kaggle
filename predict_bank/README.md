@@ -80,12 +80,13 @@ Construcción de la imagen Docker
 cd C:\Users\OMAR TORRES\Desktop\taller_IA_fase2\predict_bank
 
 ## Construir la imagen Docker
+
 docker build -t predict_bank_app .
 ```
 # Ejecutar el docker en modo interactivo
 ```bash
 docker run -it --rm predict_bank_app
-# docker run -it --name predict_run predict_bank_app
+
 ```
 
 Despues de haber construido la imagen del docker, la aplicación queda en modo interactivo,
@@ -101,8 +102,23 @@ Entrenamiento del modelo
 root@4820ed2101ab:/app# python train.py
 ```
 **Nota_1:**
+  El entrenamiento puede demorar algunos minutos, por favor sea paciente.
   Se accede a los datasets (train.csv y test.csv), se realiza el entrenamiento, el modelo entrenado
   se almacena en la carpeta datos;  temporal en el docker
+
+  Finalizado el entrenamiento se puede ver información como esta:
+  100%|███████████████████████████████████████████████████████████████████████████████████████████| 14.7M/14.7M [00:08<00:00, 1.93MB/s]
+  Archive:  ./datos/playground-series-s5e8.zip
+    inflating: ./datos/sample_submission.csv
+    inflating: ./datos/test.csv
+    inflating: ./datos/train.csv
+
+   Accuracy: 0.7755
+   F1-score: 0.4282
+   AUC: 0.8218
+   OOB Score (fuera de bolsa): 0.7728
+   Modelo guardado en ./datos/modelo_entrenado.pkl
+   root@977914e97cec:/app#
  
 ## Ejecutando predicciones con el archivo test.csv
  El siguiente comando ejecuta las predicciones, al finalizar se descarga en la carpata temporal datos el archivo predicciones.txt
@@ -111,6 +127,18 @@ root@4820ed2101ab:/app# python train.py
 ```bash
 root@4820ed2101ab:/app# python predict.py
 ```
+Despues de ejecutar el comando anterior, ademas de guardarse el archivo con las predicciones se
+puede apreciar la siguiente información en consola:
+
+root@977914e97cec:/app# python predict.py
+Predicciones guardadas en archivo de texto: datos/predicciones.txt
+Archivo de submission generado en: /app/datos/predict.csv
+id=750000, y_pred=0
+id=750001, y_pred=0
+id=750002, y_pred=0
+id=750003, y_pred=0
+id=750004, y_pred=1
+root@977914e97cec:/app#
 
 **Nota**
 
@@ -125,6 +153,11 @@ root@4820ed2101ab:/app# python predict.py
  C:\cualquier ruta>docker container prune
  # Elimina todas las imagenes 
   C:\cualquier ruta>docker image prune -a
+  C:\cualquier ruta>docker ps -aq
+  # Para todas las imagenes activas
+  for /f "tokens=*" %i in ('docker ps -q') do docker stop %i
+# Elimina imagen detenida
+docker rm id_imagen
 
 ```
 
